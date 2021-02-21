@@ -15,7 +15,7 @@ public class SubscriberRepo {
 	private JdbcTemplate jdbct;
 	
 	public List<Subscriber> getSubscribers() {
-		String sql = "SELECT name, email FROM public.subsrcribers;";
+		String sql = "SELECT name, email FROM public.subscribers;";
 		
 		List<Subscriber> subscribers = jdbct.query(sql, new SubscriberRowMapper());
 		return subscribers;
@@ -31,25 +31,25 @@ public class SubscriberRepo {
 	}
 	
 	public void save(Subscriber subscriber) {
-		jdbct.update("INSERT INTO public.subsrcribers( name, email ) "
+		jdbct.update("INSERT INTO public.subscribers( name, email ) "
 				+ "VALUES ('"+ 
 				subscriber.getName() + "','" + 
 				subscriber.getEmail() + "');");
 	}
 	
 	public void updateName(String email, String newName) {
-		jdbct.update("UPDATE public.subsrcribers\r\n" + 
+		jdbct.update("UPDATE public.subscribers\r\n" + 
 				"	SET name='" + newName + "'\r\n" + 
 				"	WHERE email='" + email + "';");
 	}
 	
 	public void removeById(Integer id) {
-		jdbct.update("DELETE FROM public.subsrcribers\r\n" + 
+		jdbct.update("DELETE FROM public.subscribers\r\n" + 
 				"	WHERE id=" + id + ";");
 	}
 	
 	public void updateEmail(Integer id, String newEmail) {
-		jdbct.update("UPDATE public.subsrcribers\r\n" + 
+		jdbct.update("UPDATE public.subscribers\r\n" + 
 				"	SET email='" + newEmail + "'\r\n" + 
 				"	WHERE id=" + id + ";");
 	}
