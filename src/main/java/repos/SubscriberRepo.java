@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import mappers.MessageRowMapper;
 import mappers.SubscriberRowMapper;
+import models.Message;
 import models.Subscriber;
 
 @Repository
@@ -15,7 +17,7 @@ public class SubscriberRepo {
 	private JdbcTemplate jdbct;
 	
 	public List<Subscriber> getSubscribers() {
-		String sql = "SELECT name, email FROM public.subsrcribers;";
+		String sql = "SELECT id,name,email FROM public.subsrcribers;";
 		
 		List<Subscriber> subscribers = jdbct.query(sql, new SubscriberRowMapper());
 		return subscribers;
@@ -52,6 +54,14 @@ public class SubscriberRepo {
 		jdbct.update("UPDATE public.subsrcribers\r\n" + 
 				"	SET email='" + newEmail + "'\r\n" + 
 				"	WHERE id=" + id + ";");
+	}
+	
+	public Subscriber getSubscriberById(Integer id) {
+		String sql = "SELECT id,name,email FROM public.subsrcribers\n"
+				+ "	WHERE id=" + id + ";";
+		Subscriber subscriber = jdbct.query(sql, new SubscriberRowMapper()).get(0);
+		
+		return subscriber;
 	}
 	
 }
